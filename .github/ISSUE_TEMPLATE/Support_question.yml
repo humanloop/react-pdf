@@ -1,0 +1,45 @@
+name: 🤔 Support question
+description: I'm stuck with something
+labels:
+  - question
+body:
+  - type: checkboxes
+    attributes:
+      label: Before you start - checklist
+      options:
+        - label: I have read documentation in README
+          required: true
+        - label: I have checked [sample](https://github.com/wojtekmaj/react-pdf/tree/master/sample) and [test](https://github.com/wojtekmaj/react-pdf/tree/master/test) suites to see real life basic implementation
+          required: true
+        - label: I have checked if this question is not already asked
+          required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: 'Describe what are you trying to achieve. Example: _I'd like to display multiple pages of my PDF._'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Solutions you've tried
+      description: Describe solutions you've already tried, if any. Make sure to include code samples if you're stuck on implementation.
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: Add any other context or screenshots about the feature request here.
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        Example:
+          - **Browser (if applicable)**: Chrome 96, Firefox 94
+          - **React-PDF version**: 5.5.0
+          - **React version**: 17.0.0
+          - **Webpack version (if applicable)**: 5.50.0
+      value: |
+          - **Browser (if applicable)**:
+          - **React-PDF version**:
+          - **React version**:
+          - **Webpack version (if applicable)**:
+      render: markdown
+
