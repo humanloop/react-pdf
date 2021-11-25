@@ -16,7 +16,8 @@
     "jest-coverage": "jest --coverage",
     "lint": "eslint sample/ src/ test/ --ext .jsx,.js",
     "prepack": "yarn clean && yarn build",
-    "test": "yarn lint && yarn jest"
+    "test": "yarn lint && yarn jest",
+    "prepare": "yarn prepack"
   },
   "keywords": [
     "pdf",
