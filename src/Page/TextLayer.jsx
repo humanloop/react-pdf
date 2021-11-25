@@ -16,6 +16,7 @@ import { isPage, isRotate } from '../shared/propTypes';
 export class TextLayerInternal extends PureComponent {
   state = {
     textItems: null,
+    styles: null,
   }
 
   componentDidMount() {
@@ -47,8 +48,8 @@ export class TextLayerInternal extends PureComponent {
     this.runningTask = cancellable;
 
     cancellable.promise
-      .then(({ items: textItems }) => {
-        this.setState({ textItems }, this.onLoadSuccess);
+      .then(({ items: textItems, styles }) => {
+        this.setState({ textItems, styles }, this.onLoadSuccess);
       })
       .catch((error) => {
         this.onLoadError(error);
@@ -88,20 +89,32 @@ export class TextLayerInternal extends PureComponent {
   }
 
   renderTextItems() {
-    const { textItems } = this.state;
+    const { textItems, styles } = this.state;
 
     if (!textItems) {
       return null;
     }
 
-    return textItems.map((textItem, itemIndex) => (
-      <TextLayerItem
-        // eslint-disable-next-line react/no-array-index-key
-        key={itemIndex}
-        itemIndex={itemIndex}
-        {...textItem}
-      />
-    ));
+    const renderedTextItems = [];
+    let dataStart = 0;
+    textItems.forEach((textItem, itemIndex) => {
+      const item = (
+        <TextLayerItem
+          // eslint-disable-next-line react/no-array-index-key
+          key={itemIndex}
+          itemIndex={itemIndex}
+          {...textItem}
+          styles={styles}
+          dataStart={dataStart}
+        />
+      );
+      renderedTextItems.push(item);
+      dataStart += textItem.str.length;
+      if (textItem.hasEOL) {
+        dataStart += 1;
+      }
+    });
+    return renderedTextItems;
   }
 
   render() {
@@ -132,6 +145,7 @@ TextLayerInternal.propTypes = {
   onGetTextError: PropTypes.func,
   onGetTextSuccess: PropTypes.func,
   page: isPage.isRequired,
+  pageIndex: PropTypes.number,
   rotate: isRotate,
   scale: PropTypes.number,
 };

@@ -6,12 +6,28 @@ import PageContext from '../PageContext';
 import { isPage, isRotate } from '../shared/propTypes';
 
 export class TextLayerItemInternal extends PureComponent {
+  state = {
+    timer: null,
+  }
+
   componentDidMount() {
     this.alignTextItem();
+    this.setState({
+      timer: setTimeout(() => {
+        this.alignTextItem();
+      }, 50),
+    });
   }
 
   componentDidUpdate() {
     this.alignTextItem();
+  }
+
+  componentWillUnmount() {
+    const { timer } = this.state;
+    if (timer) {
+      clearTimeout(timer);
+    }
   }
 
   get unrotatedViewport() {
@@ -62,14 +78,6 @@ export class TextLayerItemInternal extends PureComponent {
     return defaultSideways ? y - xMin : x - xMin;
   }
 
-  getFontData(fontName) {
-    const { page } = this.props;
-
-    return new Promise((resolve) => {
-      page.commonObjs.get(fontName, resolve);
-    });
-  }
-
   alignTextItem() {
     const element = this.item;
 
@@ -77,30 +85,24 @@ export class TextLayerItemInternal extends PureComponent {
       return;
     }
 
-    element.style.transform = '';
+    const {
+      fontName, scale, width, styles,
+    } = this.props;
 
-    const { fontName, scale, width } = this.props;
+    element.style.fontFamily = `${fontName}, "sans-serif"`;
 
-    element.style.fontFamily = `${fontName}, sans-serif`;
-
-    this.getFontData(fontName)
-      .then((fontData) => {
-        const fallbackFontName = fontData ? fontData.fallbackName : 'sans-serif';
-        element.style.fontFamily = `${fontName}, ${fallbackFontName}`;
-
-        const targetWidth = width * scale;
-        const actualWidth = this.getElementWidth(element);
-
-        let transform = `scaleX(${targetWidth / actualWidth})`;
-
-        const ascent = fontData ? fontData.ascent : 0;
-        if (ascent) {
-          transform += ` translateY(${(1 - ascent) * 100}%)`;
-        }
-
-        element.style.transform = transform;
-        element.style.WebkitTransform = transform;
-      });
+    let tempTransform = '';
+    if (width > 0) {
+      const targetWidth = width * scale;
+      const actualWidth = this.getElementWidth(element);
+      tempTransform += ` scaleX(${targetWidth / actualWidth})`;
+    }
+    const fontStyle = styles[fontName];
+    if (fontStyle) {
+      tempTransform += ` translateY(${(1 - fontStyle.ascent) * 100}%)`;
+    }
+    element.style.transform = tempTransform;
+    element.style.WebkitTransform = tempTransform;
   }
 
   getElementWidth = (element) => {
@@ -110,7 +112,9 @@ export class TextLayerItemInternal extends PureComponent {
 
   render() {
     const { fontSize, top, left } = this;
-    const { customTextRenderer, scale, str: text } = this.props;
+    const {
+      customTextRenderer, scale, str: text, dataStart,
+    } = this.props;
 
     return (
       <span
@@ -125,7 +129,9 @@ export class TextLayerItemInternal extends PureComponent {
           transformOrigin: 'left bottom',
           whiteSpace: 'pre',
           pointerEvents: 'all',
+          lineHeight: '1em',
         }}
+        data-start={dataStart}
       >
         {
           customTextRenderer
@@ -139,12 +145,14 @@ export class TextLayerItemInternal extends PureComponent {
 
 TextLayerItemInternal.propTypes = {
   customTextRenderer: PropTypes.func,
+  dataStart: PropTypes.number.isRequired,
   fontName: PropTypes.string.isRequired,
   itemIndex: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
   page: isPage.isRequired,
   rotate: isRotate,
   scale: PropTypes.number,
   str: PropTypes.string.isRequired,
+  styles: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   transform: PropTypes.arrayOf(PropTypes.number).isRequired,
   width: PropTypes.number.isRequired,
 };

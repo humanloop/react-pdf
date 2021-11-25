@@ -91,6 +91,7 @@ export class PageInternal extends PureComponent {
       onRenderError,
       onRenderSuccess,
       renderInteractiveForms,
+      pageIndex,
     } = this.props;
 
     return {
@@ -105,6 +106,7 @@ export class PageInternal extends PureComponent {
       onRenderError,
       onRenderSuccess,
       page,
+      pageIndex,
       renderInteractiveForms,
       rotate: this.rotate,
       scale: this.scale,
@@ -372,6 +374,7 @@ export class PageInternal extends PureComponent {
       <div
         className={mergeClassNames('react-pdf__Page', className)}
         data-page-number={pageNumber}
+        data-page-index={pageNumber - 1}
         ref={mergeRefs(inputRef, this.ref)}
         style={{ position: 'relative' }}
         {...this.eventProps}
