@@ -17,7 +17,7 @@
     "lint": "eslint sample/ src/ test/ --ext .jsx,.js",
     "prepack": "yarn clean && yarn build",
     "test": "yarn lint && yarn jest",
-    "prepare": "yarn prepack"
+    "prepare": "yarn install && yarn prepack"
   },
   "keywords": [
     "pdf",
