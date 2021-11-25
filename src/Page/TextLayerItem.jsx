@@ -149,6 +149,7 @@ TextLayerItemInternal.propTypes = {
   fontName: PropTypes.string.isRequired,
   itemIndex: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
   page: isPage.isRequired,
+  pageIndex: PropTypes.number.isRequired,
   rotate: isRotate,
   scale: PropTypes.number,
   str: PropTypes.string.isRequired,
