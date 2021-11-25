@@ -14,7 +14,10 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: 'Describe what the problem is. Example: _I'd like to add a feature that […]_'
+      description: |
+        Describe what the problem is.
+
+        Example: _I'd like to add a feature that […]_
     validations:
       required: true
   - type: textarea
