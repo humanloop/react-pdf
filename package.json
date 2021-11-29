@@ -17,7 +17,7 @@
     "lint": "eslint sample/ src/ test/ --ext .jsx,.js",
     "prepack": "npm run clean && npm run build",
     "test": "npm run lint && npm run jest",
-    "prepare": "npm install && npm run prepack"
+    "prepare": "npm run prepack"
   },
   "keywords": [
     "pdf",
