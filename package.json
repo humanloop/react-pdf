@@ -6,8 +6,8 @@
   "module": "dist/esm/entry.js",
   "source": "src/entry.js",
   "scripts": {
-    "build": "yarn build-js-all && yarn copy-styles",
-    "build-js-all": "yarn build-js-esm && yarn build-js-umd",
+    "build": "npm run build-js-all && npm run copy-styles",
+    "build-js-all": "npm run build-js-esm && npm run build-js-umd",
     "build-js-esm": "BABEL_ENV=production-esm babel src -d dist/esm --ignore \"**/*.spec.js,**/*.spec.jsx\"",
     "build-js-umd": "BABEL_ENV=production-umd babel src -d dist/umd --ignore \"**/*.spec.js,**/*.spec.jsx\"",
     "clean": "rimraf dist",
@@ -15,9 +15,9 @@
     "jest": "jest",
     "jest-coverage": "jest --coverage",
     "lint": "eslint sample/ src/ test/ --ext .jsx,.js",
-    "prepack": "yarn clean && yarn build",
-    "test": "yarn lint && yarn jest",
-    "prepare": "yarn install && yarn prepack"
+    "prepack": "npm run clean && npm run build",
+    "test": "npm run lint && npm run jest",
+    "prepare": "npm run install && npm run prepack"
   },
   "keywords": [
     "pdf",
