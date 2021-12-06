@@ -99,7 +99,9 @@ export class PageCanvasInternal extends PureComponent {
     }
 
     const { renderViewport, viewport } = this;
-    const { canvasBackground, page, renderInteractiveForms } = this.props;
+    const {
+      canvasBackground, page, renderInteractiveForms, renderMainLayer,
+    } = this.props;
 
     canvas.width = renderViewport.width;
     canvas.height = renderViewport.height;
@@ -120,6 +122,10 @@ export class PageCanvasInternal extends PureComponent {
 
     // If another render is in progress, let's cancel it
     this.cancelRenderingTask();
+
+    if (!renderMainLayer) {
+      return null;
+    }
 
     this.renderer = page.render(renderContext);
 
@@ -152,6 +158,7 @@ PageCanvasInternal.propTypes = {
   onRenderSuccess: PropTypes.func,
   page: isPage.isRequired,
   renderInteractiveForms: PropTypes.bool,
+  renderMainLayer: PropTypes.bool,
   rotate: isRotate,
   scale: PropTypes.number.isRequired,
 };

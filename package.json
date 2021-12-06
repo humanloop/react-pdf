@@ -115,6 +115,5 @@
     "type": "git",
     "url": "https://github.com/wojtekmaj/react-pdf.git"
   },
-  "funding": "https://github.com/wojtekmaj/react-pdf?sponsor=1",
-  "packageManager": "yarn@3.1.0"
+  "funding": "https://github.com/wojtekmaj/react-pdf?sponsor=1"
 }
