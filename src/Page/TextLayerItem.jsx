@@ -15,7 +15,7 @@ export class TextLayerItemInternal extends PureComponent {
     this.setState({
       timer: setTimeout(() => {
         this.alignTextItem();
-      }, 50),
+      }, 100),
     });
   }
 

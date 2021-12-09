@@ -126,12 +126,15 @@ export class TextLayerInternal extends PureComponent {
         style={{
           position: 'absolute',
           top: '50%',
-          left: '50%',
+          // left: '50%',
           width: `${viewport.width}px`,
           height: `${viewport.height}px`,
           color: 'transparent',
-          transform: `translate(-50%, -50%) rotate(${rotate}deg)`,
-          WebkitTransform: `translate(-50%, -50%) rotate(${rotate}deg)`,
+          // transform: `translate(-50%, -50%) rotate(${rotate}deg)`,
+          // WebkitTransform: `translate(-50%, -50%) rotate(${rotate}deg)`,
+          left: 0,
+          transform: `translate(0, -50%) rotate(${rotate}deg)`,
+          WebkitTransform: `translate(0, -50%) rotate(${rotate}deg)`,
           pointerEvents: 'none',
         }}
       >

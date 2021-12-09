@@ -90,6 +90,7 @@ export class PageInternal extends PureComponent {
       onRenderAnnotationLayerSuccess,
       onRenderError,
       onRenderSuccess,
+      renderMainLayer,
       renderInteractiveForms,
       pageIndex,
     } = this.props;
@@ -107,6 +108,7 @@ export class PageInternal extends PureComponent {
       onRenderSuccess,
       page,
       pageIndex,
+      renderMainLayer,
       renderInteractiveForms,
       rotate: this.rotate,
       scale: this.scale,

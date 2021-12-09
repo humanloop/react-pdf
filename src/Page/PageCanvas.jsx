@@ -109,6 +109,11 @@ export class PageCanvasInternal extends PureComponent {
     canvas.style.width = `${Math.floor(viewport.width)}px`;
     canvas.style.height = `${Math.floor(viewport.height)}px`;
 
+    if (!renderMainLayer) {
+      // If another render is in progress, let's cancel it
+      this.cancelRenderingTask();
+      return null;
+    }
     const renderContext = {
       get canvasContext() {
         return canvas.getContext('2d');
@@ -122,10 +127,6 @@ export class PageCanvasInternal extends PureComponent {
 
     // If another render is in progress, let's cancel it
     this.cancelRenderingTask();
-
-    if (!renderMainLayer) {
-      return null;
-    }
 
     this.renderer = page.render(renderContext);
 
